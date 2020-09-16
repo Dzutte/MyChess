@@ -1,4 +1,43 @@
 package ChessPack;
 
-public class Field {
+public class Field
+{
+    private boolean Empty;
+    private Piece LocalPiece;
+
+    Field()
+    {
+        Empty = true;
+    }
+
+    Field(PieceColor NewColor)
+    {
+        Empty = true;
+    }
+
+    public void PutPiece(Piece NewPiece)
+    {
+        Empty = false;
+        LocalPiece = NewPiece;
+    }
+
+    public Piece CheckPiece()
+    {
+        return(LocalPiece);
+    }
+
+    public Piece TakePiece()
+    {
+        Piece TMPPiece = LocalPiece;
+        LocalPiece = null;
+        return(TMPPiece);
+    }
+
+    public String ShowField()
+    {
+        if(Empty)
+            return("   ");
+        else
+            return(LocalPiece.GetDesignation());
+    }
 }
