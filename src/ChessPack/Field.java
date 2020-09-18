@@ -10,11 +10,6 @@ public class Field
         Empty = true;
     }
 
-    Field(PieceColor NewColor)
-    {
-        Empty = true;
-    }
-
     public void PutPiece(Piece NewPiece)
     {
         Empty = false;

@@ -4,6 +4,9 @@ public class MainClass
 {
     public static void main(String[] args)
     {
-        System.out.println("123");
+        Board MainBoard = new Board();
+        Piece TestPiece = new Piece(PieceColor.Black, PieceType.King);
+        MainBoard.PlacePiece(4,4,TestPiece);
+        MainBoard.Draw();
     }
 }
