@@ -16,6 +16,11 @@ public class Field
         LocalPiece = NewPiece;
     }
 
+    public boolean Check()
+    {
+        return(Empty);
+    }
+
     public Piece CheckPiece()
     {
         return(LocalPiece);
