@@ -23,13 +23,17 @@ public class Field
 
     public Piece CheckPiece()
     {
-        return(LocalPiece);
+        if(Empty)
+            return(new Piece());
+        else
+            return(LocalPiece);
     }
 
     public Piece TakePiece()
     {
         Piece TMPPiece = LocalPiece;
         LocalPiece = null;
+        Empty = true;
         return(TMPPiece);
     }
 
