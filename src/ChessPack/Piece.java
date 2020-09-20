@@ -20,11 +20,6 @@ public class Piece
         NotMoved = true;
     }
 
-    public void SetColor(PieceColor NewColor)
-    {
-        Color = NewColor;
-    }
-
     public PieceColor GetColor()
     {
         return(Color);
@@ -48,6 +43,11 @@ public class Piece
     public boolean CheckStillness()
     {
         return(NotMoved);
+    }
+
+    public boolean IsEnemy(Piece OtherPiece)
+    {
+        return(OtherPiece.GetColor() != Color);
     }
 
     private String ColorToString()

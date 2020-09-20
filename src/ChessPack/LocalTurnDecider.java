@@ -88,29 +88,89 @@ public class LocalTurnDecider implements TurnDecider
         return(CurrentTurn);
     }
 
-    private boolean PawnCanDoThis(Board CurrentBoard, Turn CurrentTurn)
+    private int ColorDirection(PieceColor Color)
     {
-        return(true);//WIP
+        if(Color == PieceColor.White)
+            return(1);
+        else
+            return(-1);
     }
 
-    private boolean KnightCanDoThis(Board CurrentBoard, Turn CurrentTurn)
+    private boolean PawnCanDoThis(Board CurrentBoard, Turn CurrentTurn)
     {
-        return(true);//WIP
+        Piece CurrentPiece = CurrentBoard.CheckPiece(CurrentTurn.GetFrom());
+        if(CurrentTurn.IsVertical())// Move
+        {
+            if((CurrentTurn.GetVerticalMove()) * ColorDirection(CurrentPiece.GetColor()) == 1)
+                return(CurrentBoard.CheckFieldEmpty(CurrentTurn.GetTo()));
+            else if((CurrentTurn.GetVerticalMove()) * ColorDirection(CurrentPiece.GetColor()) == 2)
+            {
+                if(CurrentBoard.CheckClearVertical(CurrentTurn))
+                    return (CurrentPiece.CheckStillness() & CurrentBoard.CheckFieldEmpty(CurrentTurn.GetTo()));
+                else
+                    return(false);
+            }
+            else
+                return(false);
+        }
+        else// Attack
+        {
+            if(Math.abs(CurrentTurn.GetHorizontalMove()) == 1)
+            {
+                if((CurrentTurn.GetVerticalMove()) * ColorDirection(CurrentPiece.GetColor()) == 1)
+                    return(!CurrentBoard.CheckFieldEmpty(CurrentTurn.GetTo()));
+                else
+                    return(false);
+            }
+            else
+                return(false);
+        }
+    }
+
+    private boolean KnightCanDoThis(Turn CurrentTurn)
+    {
+        if((Math.abs(CurrentTurn.GetVerticalMove()) == 2) & (Math.abs(CurrentTurn.GetHorizontalMove()) == 1))
+            return(true);
+        else if((Math.abs(CurrentTurn.GetVerticalMove()) == 1) & (Math.abs(CurrentTurn.GetHorizontalMove()) == 2))
+            return(true);
+        else
+            return(false);
     }
 
     private boolean BishopCanDoThis(Board CurrentBoard, Turn CurrentTurn)
     {
-        return(true);//WIP
+        if(CurrentTurn.IsDiagonal())
+            return(CurrentBoard.CheckClearDiagonal(CurrentTurn));
+        else
+            return(false);
     }
 
     private boolean RookCanDoThis(Board CurrentBoard, Turn CurrentTurn)
     {
-        return(true);//WIP
+        if(CurrentTurn.IsVertical())
+            return(CurrentBoard.CheckClearVertical(CurrentTurn));
+        else if(CurrentTurn.IsHorizontal())
+            return(CurrentBoard.CheckClearHorizontal(CurrentTurn));
+        else
+            return(false);
     }
 
     private boolean KingCanDoThis(Board CurrentBoard, Turn CurrentTurn)
     {
-        return(true);//WIP
+        if(Math.abs(CurrentTurn.GetVerticalMove()) < 2)
+        {
+            if(Math.abs(CurrentTurn.GetHorizontalMove()) < 2)
+                return(true);
+            else //Castling check
+            {
+                if(CurrentTurn.IsCastling())
+                    return(CurrentBoard.CastlingAvailable(CurrentTurn));
+                else
+                    return(false);
+            }
+        }
+        else
+            return(false);
     }
 
     private boolean PieceCanDoThis(Board CurrentBoard, Turn CurrentTurn)
@@ -120,7 +180,7 @@ public class LocalTurnDecider implements TurnDecider
             case Pawn:
                 return(PawnCanDoThis(CurrentBoard, CurrentTurn));
             case Knight:
-                return(KnightCanDoThis(CurrentBoard, CurrentTurn));
+                return(KnightCanDoThis(CurrentTurn));
             case Bishop:
                 return(BishopCanDoThis(CurrentBoard, CurrentTurn));
             case Rook:
@@ -136,15 +196,33 @@ public class LocalTurnDecider implements TurnDecider
 
     private boolean AcceptableTurn(Board CurrentBoard, PieceColor PlayerColor, Turn CurrentTurn)
     {
-        if(CurrentBoard.CheckOwnership(CurrentTurn.GetFromX(), CurrentTurn.GetFromY(), PlayerColor))
+        if(CurrentTurn.GetFrom().IsOnBoard() & CurrentTurn.GetTo().IsOnBoard() & (!CurrentTurn.IsFake()))
         {
-            if(!CurrentBoard.CheckOwnership(CurrentTurn.GetToX(), CurrentTurn.GetToY(), PlayerColor))
-                return(PieceCanDoThis(CurrentBoard, CurrentTurn));
+            if (CurrentBoard.CheckOwnership(CurrentTurn.GetFrom(), PlayerColor))
+            {
+                if (!CurrentBoard.CheckOwnership(CurrentTurn.GetTo(), PlayerColor))
+                    return (PieceCanDoThis(CurrentBoard, CurrentTurn));
+                else
+                    return (false);
+            }
             else
-                return(false);
+                return (false);
         }
         else
-            return(false);
+            return (false);
+    }
+
+    private String ColorToString(PieceColor Color)
+    {
+        switch (Color)
+        {
+            case White:
+                return("White");
+            case Black:
+                return("Black");
+            default:
+                return("Error");
+        }
     }
 
     @Override
@@ -154,6 +232,7 @@ public class LocalTurnDecider implements TurnDecider
         Turn CurrentTurn;
         do
         {
+            System.out.println(ColorToString(PlayerColor));
             CurrentTurn = StringToTurn(sc.nextLine());
         }
         while(!AcceptableTurn(CurrentBoard, PlayerColor, CurrentTurn));

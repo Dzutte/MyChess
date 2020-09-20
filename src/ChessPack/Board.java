@@ -2,7 +2,7 @@ package ChessPack;
 
 public class Board
 {
-    private Field[][] Fields;
+    private final Field[][] Fields;
 
     Board()
     {
@@ -23,9 +23,14 @@ public class Board
             return(false);
     }
 
-    public boolean CheckField(int X, int Y)
+    public boolean CheckFieldEmpty(int X, int Y)
     {
         return(Fields[X][Y].Check());
+    }
+
+    public boolean CheckFieldEmpty(Coordinates FieldCoordinates)
+    {
+        return(CheckFieldEmpty(FieldCoordinates.GetX(), FieldCoordinates.GetY()));
     }
 
     public Piece CheckPiece(int X, int Y)
@@ -39,12 +44,106 @@ public class Board
         }
     }
 
+    public Piece CheckPiece(Coordinates FieldCoordinates)
+    {
+        return(CheckPiece(FieldCoordinates.GetX(), FieldCoordinates.GetY()));
+    }
+
     public boolean CheckOwnership(int X, int Y, PieceColor PlayerColor)
     {
         if((X < 8)&(X > -1)&(Y < 8)&(Y > -1))
         {
-            if(Fields[X][Y].CheckPiece().GetColor() == PlayerColor)
-                return(true);
+            return (Fields[X][Y].CheckPiece().GetColor() == PlayerColor);
+        }
+        else
+            return(false);
+    }
+
+    public boolean CheckOwnership(Coordinates FieldCoordinates, PieceColor PlayerColor)
+    {
+        return(CheckOwnership(FieldCoordinates.GetX(), FieldCoordinates.GetY(), PlayerColor));
+    }
+
+    public boolean CheckClearVertical(Turn CurrentTurn)
+    {
+        if(Math.abs(CurrentTurn.GetVerticalMove()) == 1)
+            return(true);
+        else
+        {
+            boolean Emptiness = true;
+            Turn FormattedTurn = new Turn(CurrentTurn);
+            FormattedTurn.FormY();
+            for(int I = FormattedTurn.GetFromY() + 1; I < FormattedTurn.GetToY(); I++)
+                if(!CheckFieldEmpty(FormattedTurn.GetFromX(), I))
+                    Emptiness = false;
+            return(Emptiness);
+        }
+    }
+
+    public boolean CheckClearHorizontal(Turn CurrentTurn)
+    {
+        if(Math.abs(CurrentTurn.GetHorizontalMove()) == 1)
+            return(true);
+        else
+        {
+            boolean Emptiness = true;
+            Turn FormattedTurn = new Turn(CurrentTurn);
+            FormattedTurn.FormX();
+            for(int I = FormattedTurn.GetFromX() + 1; I < FormattedTurn.GetToX(); I++)
+                if(!CheckFieldEmpty(I, FormattedTurn.GetFromY()))
+                    Emptiness = false;
+            return(Emptiness);
+        }
+    }
+
+    public boolean CheckClearDiagonal(Turn CurrentTurn)
+    {
+        int Direction;
+        if(CurrentTurn.IsRisingDiagonal())
+            Direction = 1;
+        else
+            Direction = -1;
+        if(Math.abs(CurrentTurn.GetHorizontalMove()) == 1)
+            return(true);
+        else
+        {
+            boolean Emptiness = true;
+            Turn FormattedTurn = new Turn(CurrentTurn);
+            FormattedTurn.FormX();
+            for(int I = 1; I < FormattedTurn.GetHorizontalMove(); I++)
+                if(!CheckFieldEmpty(FormattedTurn.GetFromX() + I, FormattedTurn.GetFromY() + (I * Direction)))
+                    Emptiness = false;
+            return(Emptiness);
+        }
+    }
+
+    public boolean CastlingAvailable(Turn CastlingTurn)
+    {
+        if(((CastlingTurn.GetToY() == 0) & (CheckPiece(CastlingTurn.GetFrom()).GetColor() == PieceColor.White))
+            |((CastlingTurn.GetToY() == 7) & (CheckPiece(CastlingTurn.GetFrom()).GetColor() == PieceColor.Black)))
+        {
+            if(CheckPiece(CastlingTurn.GetFrom()).CheckStillness())
+            {
+                int CastlingLine;
+                if(CastlingTurn.GetToY() == 0)
+                    CastlingLine = 0;
+                else
+                    CastlingLine = 7;
+                Piece CastlingRoot;
+                int CastlingRootX;
+                if(CastlingTurn.GetToX() == 2)
+                {
+                    CastlingRoot = CheckPiece(0, CastlingLine);
+                    CastlingRootX = 0;
+                }
+                else
+                {
+                    CastlingRoot = CheckPiece(7, CastlingLine);
+                    CastlingRootX = 7;
+                }
+                return(CastlingRoot.CheckStillness()
+                        & CheckClearHorizontal(new Turn(CastlingTurn.GetFromX(), CastlingLine, CastlingRootX, CastlingLine)));
+            }
             else
                 return(false);
         }
@@ -52,26 +151,30 @@ public class Board
             return(false);
     }
 
-    public boolean Move(int FromX, int FromY, int ToX, int ToY)
+    public void Move(int FromX, int FromY, int ToX, int ToY)
     {
-        if((FromX >7)|(FromX < 0)|(FromY > 7)|(FromY < 0))
-            return(false);
-        else if((ToX >7)|(ToX < 0)|(ToY > 7)|(ToY < 0))
-            return(false);
-        else
+        Fields[ToX][ToY].PutPiece(Fields[FromX][FromY].TakePiece());
+        Fields[ToX][ToY].CheckPiece().SetMoved();
+    }
+
+    public void Move(Coordinates From, Coordinates To)
+    {
+        Move(From.GetX(), From.GetY(), To.GetX(), To.GetY());
+    }
+
+    public void Move(Turn T)
+    {
+        if(T.IsCastling())// Additional move Rook
         {
-            Fields[ToX][ToY].PutPiece(Fields[FromX][FromY].TakePiece());
-            Fields[ToX][ToY].CheckPiece().SetMoved();
-            return(true);
+            if(T.GetToX() == 2)
+                Move(0, T.GetFromY(), 3, T.GetToY());
+            else
+                Move(7, T.GetFromY(), 5, T.GetToY());
         }
+        Move(T.GetFrom(), T.GetTo());
     }
 
-    public boolean Move(Turn T)
-    {
-        return(Move(T.GetFromX(), T.GetFromY(), T.GetToX(), T.GetToY()));
-    }
-
-    public boolean Remove(int X, int Y, Piece NewPiece)
+    public boolean Remove(int X, int Y)
     {
         if((X < 8)&(X > -1)&(Y < 8)&(Y > -1))
         {

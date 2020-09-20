@@ -1,0 +1,56 @@
+package ChessPack;
+
+public class Coordinates
+{
+    private int X;
+    private int Y;
+
+    Coordinates()
+    {
+        X = -1;
+        Y = -1;
+    }
+
+    Coordinates(int NewX, int NewY)
+    {
+        X = NewX;
+        Y = NewY;
+    }
+
+    Coordinates(Coordinates OtherCoordinates)
+    {
+        X = OtherCoordinates.GetX();
+        Y = OtherCoordinates.GetY();
+    }
+
+    public void SetX(int NewX)
+    {
+        X = NewX;
+    }
+
+    public int GetX()
+    {
+        return(X);
+    }
+
+    public void SetY(int NewY)
+    {
+        Y = NewY;
+    }
+
+    public int GetY()
+    {
+        return(Y);
+    }
+
+    public void Set(Coordinates OtherCoordinates)
+    {
+        X = OtherCoordinates.GetX();
+        Y = OtherCoordinates.GetY();
+    }
+
+    public boolean IsOnBoard()
+    {
+        return((X < 8)&(X > -1)&(Y < 8)&(Y > -1));
+    }
+}

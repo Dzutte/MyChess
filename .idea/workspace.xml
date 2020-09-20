@@ -25,17 +25,17 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="84a01cf4-b0c9-46e6-a72d-d7bd205679b0" name="Default Changelist" comment="Work on local playing started.">
-      <change afterPath="$PROJECT_DIR$/out/production/MyChess/ChessPack/BoardAnalytics.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/MyChess/ChessPack/ControlType.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/MyChess/ChessPack/LocalTurnDecider.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/MyChess/ChessPack/Player$1.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/MyChess/ChessPack/Player.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/MyChess/ChessPack/Turn.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/MyChess/ChessPack/TurnDecider.class" afterDir="false" />
+    <list default="true" id="84a01cf4-b0c9-46e6-a72d-d7bd205679b0" name="Default Changelist" comment="Null poiner fixed">
+      <change afterPath="$PROJECT_DIR$/out/production/MyChess/ChessPack/LocalTurnDecider$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ChessPack/Coordinates.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/MyChess/ChessPack/Field.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/MyChess/ChessPack/Field.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ChessPack/Field.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ChessPack/Field.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/MyChess/ChessPack/Board.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/MyChess/ChessPack/Board.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/MyChess/ChessPack/LocalTurnDecider.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/MyChess/ChessPack/LocalTurnDecider.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/MyChess/ChessPack/Piece.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/MyChess/ChessPack/Piece.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ChessPack/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ChessPack/Board.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ChessPack/LocalTurnDecider.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ChessPack/LocalTurnDecider.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ChessPack/Piece.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ChessPack/Piece.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ChessPack/Turn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ChessPack/Turn.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -134,7 +134,14 @@
       <option name="project" value="LOCAL" />
       <updated>1600501973929</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Null poiner fixed">
+      <created>1600503316886</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1600503316886</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -167,32 +174,37 @@
     <MESSAGE value="Field Finished" />
     <MESSAGE value="Board Finished" />
     <MESSAGE value="Work on local playing started." />
-    <option name="LAST_COMMIT_MESSAGE" value="Work on local playing started." />
+    <MESSAGE value="Null poiner fixed" />
+    <option name="LAST_COMMIT_MESSAGE" value="Null poiner fixed" />
   </component>
   <component name="WindowStateProjectService">
     <state x="163" y="69" key="DiffContextDialog" timestamp="1600281440191">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
     <state x="163" y="69" key="DiffContextDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1600281440191" />
-    <state width="1340" height="551" key="GridCell.Tab.0.bottom" timestamp="1600503290170">
+    <state width="1340" height="668" key="GridCell.Tab.0.bottom" timestamp="1600518780933">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1340" height="551" key="GridCell.Tab.0.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1600503290170" />
-    <state width="1340" height="551" key="GridCell.Tab.0.center" timestamp="1600503290170">
+    <state width="1340" height="668" key="GridCell.Tab.0.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1600518780933" />
+    <state width="1340" height="668" key="GridCell.Tab.0.center" timestamp="1600518780932">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1340" height="551" key="GridCell.Tab.0.center/0.0.1680.1050@0.0.1680.1050" timestamp="1600503290170" />
-    <state width="1340" height="551" key="GridCell.Tab.0.left" timestamp="1600503290169">
+    <state width="1340" height="668" key="GridCell.Tab.0.center/0.0.1680.1050@0.0.1680.1050" timestamp="1600518780932" />
+    <state width="1340" height="668" key="GridCell.Tab.0.left" timestamp="1600518780932">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1340" height="551" key="GridCell.Tab.0.left/0.0.1680.1050@0.0.1680.1050" timestamp="1600503290169" />
-    <state width="1340" height="551" key="GridCell.Tab.0.right" timestamp="1600503290170">
+    <state width="1340" height="668" key="GridCell.Tab.0.left/0.0.1680.1050@0.0.1680.1050" timestamp="1600518780932" />
+    <state width="1340" height="668" key="GridCell.Tab.0.right" timestamp="1600518780933">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1340" height="551" key="GridCell.Tab.0.right/0.0.1680.1050@0.0.1680.1050" timestamp="1600503290170" />
-    <state x="435" y="240" key="Vcs.Push.Dialog.v2" timestamp="1600501997603">
+    <state width="1340" height="668" key="GridCell.Tab.0.right/0.0.1680.1050@0.0.1680.1050" timestamp="1600518780933" />
+    <state x="435" y="240" key="Vcs.Push.Dialog.v2" timestamp="1600503334773">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state x="435" y="240" key="Vcs.Push.Dialog.v2/0.0.1680.1050@0.0.1680.1050" timestamp="1600501997603" />
+    <state x="435" y="240" key="Vcs.Push.Dialog.v2/0.0.1680.1050@0.0.1680.1050" timestamp="1600503334773" />
+    <state x="564" y="226" width="672" height="678" key="search.everywhere.popup" timestamp="1600525177560">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state x="564" y="226" width="672" height="678" key="search.everywhere.popup/0.0.1680.1050@0.0.1680.1050" timestamp="1600525177560" />
   </component>
 </project>
