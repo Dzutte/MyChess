@@ -12,6 +12,14 @@ public class Board
                 Fields[I][J] = new Field();
     }
 
+    Board(Board OtherBoard)
+    {
+        Fields = new Field[8][8];
+        for(int I = 0; I < 8; I++)
+            for (int J = 0; J < 8; J++)
+                Fields[I][J] = new Field(OtherBoard.CheckPiece(I, J));
+    }
+
     public boolean PlacePiece(int X, int Y, Piece NewPiece)
     {
         if((X < 8)&(X > -1)&(Y < 8)&(Y > -1))

@@ -53,4 +53,9 @@ public class Coordinates
     {
         return((X < 8)&(X > -1)&(Y < 8)&(Y > -1));
     }
+
+    public static boolean IsOnBoard(int XCoord, int YCoord)
+    {
+        return((XCoord < 8)&(XCoord > -1)&(YCoord < 8)&(YCoord > -1));
+    }
 }

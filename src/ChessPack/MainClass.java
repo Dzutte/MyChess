@@ -14,7 +14,7 @@ public class MainClass
             else
                 CurrentPlayer = Player1;
         }
-        while(!BoardAnalytics.IsGameOver(GameBoard, CurrentPlayer.GetColor()));
+        while(BoardAnalytics.CheckGameStatus(GameBoard, CurrentPlayer.GetColor()) == GameStatus.PlayOn);
     }
 
     private static void GameInitialization()

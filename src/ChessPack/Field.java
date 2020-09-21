@@ -10,6 +10,17 @@ public class Field
         Empty = true;
     }
 
+    Field(Piece NewPiece)
+    {
+        if(NewPiece.GetType() == PieceType.WrongType)
+            Empty = true;
+        else
+        {
+            Empty = false;
+            LocalPiece = new Piece(NewPiece);
+        }
+    }
+
     public void PutPiece(Piece NewPiece)
     {
         Empty = false;

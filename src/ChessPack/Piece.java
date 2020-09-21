@@ -20,6 +20,13 @@ public class Piece
         NotMoved = true;
     }
 
+    Piece(Piece OtherPiece)
+    {
+        Color = OtherPiece.GetColor();
+        Type = OtherPiece.GetType();
+        NotMoved = OtherPiece.CheckStillness();
+    }
+
     public PieceColor GetColor()
     {
         return(Color);
